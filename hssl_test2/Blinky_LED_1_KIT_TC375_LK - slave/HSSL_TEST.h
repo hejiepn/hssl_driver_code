@@ -30,9 +30,9 @@
 
 #include "stdint.h"
 
+
 #include "Hssl/Std/IfxHssl.h"
 #include "Port/Std/IfxPort.h"
-
 
 /*********************************************************************************************************************/
 /*------------------------------------------------Function Prototypes------------------------------------------------*/
@@ -44,6 +44,12 @@ void streamingTransfer(int channelNm);
 void speedMode(char speedMode); // h= highSpeed and l = lowSpeed
 void setSlave(void);
 void sendPing(void);
+void setClockTest(void);
+void testPingAnswer(void);
+void initLED(void);
+void blinkLED(void);
+void printPLLFreq(void);
+
 
 
 

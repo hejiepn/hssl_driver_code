@@ -45,6 +45,11 @@ void speedMode(char speedMode); // h= highSpeed and l = lowSpeed
 void setSlave(void);
 void sendPing(void);
 void setClockTest(void);
+void testPing(void);
+void initLED(void);
+void blinkLED(void);
+void printPLLFreq(void);
+
 
 
 

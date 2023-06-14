@@ -60,22 +60,21 @@ void core0_main(void)
   IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
 
   initHSSL('m', 'h', 0);
-  //setSlave();
-
-  
-  sendPing();
-
   initDma();
-
+  initLED();
+  setSlave();
+  printPLLFreq();
 
   while (1)
   {
-      //streamingTransfer(0);
-      //setClockTest();
-      //simpleTransferHSSL(0, 0x70000000, 0x12345678);
-      //simpleReadHSSL(0, 0x70000000);
-        //startTransferDma();
 
+    sendPing();
+    testPing();
+
+    // streamingTransfer(0);
+    // setClockTest();
+    // simpleTransferHSSL(0, 0x70000000, 0x12345678);
+    // simpleReadHSSL(0, 0x70000000);
+    // startTransferDma();
   }
 }
-

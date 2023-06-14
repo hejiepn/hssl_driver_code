@@ -59,10 +59,14 @@ void core0_main(void)
   IfxCpu_emitEvent(&g_cpuSyncEvent);
   IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
 
-  initHSSL('s', 'l', 1);
+  initHSSL('s', 'h', 1);
+  initLED();
+  printPLLFreq();
+
 
   while (1)
   {
+    testPingAnswer();
 
   }
 }

@@ -154,3 +154,29 @@ c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ 
 ../Libraries/iLLD/TC37A/Tricore/Scu/Std/IfxScuWdt.h :
 /HSSL_TEST.o :	c:/Infineon/AURIX-Studio-1.9.4/plugins/com.infineon.aurix.tools_1.9.4/build_system/tools/Compilers/Tasking_1.1r8/ctc/include/stdbool.h
 c:/Infineon/AURIX-Studio-1.9.4/plugins/com.infineon.aurix.tools_1.9.4/build_system/tools/Compilers/Tasking_1.1r8/ctc/include/stdbool.h :
+/HSSL_TEST.o :	c:/Infineon/AURIX-Studio-1.9.4/plugins/com.infineon.aurix.tools_1.9.4/build_system/tools/Compilers/Tasking_1.1r8/ctc/include/stdio.h
+c:/Infineon/AURIX-Studio-1.9.4/plugins/com.infineon.aurix.tools_1.9.4/build_system/tools/Compilers/Tasking_1.1r8/ctc/include/stdio.h :
+/HSSL_TEST.o :	c:/Infineon/AURIX-Studio-1.9.4/plugins/com.infineon.aurix.tools_1.9.4/build_system/tools/Compilers/Tasking_1.1r8/ctc/include/stdarg.h
+c:/Infineon/AURIX-Studio-1.9.4/plugins/com.infineon.aurix.tools_1.9.4/build_system/tools/Compilers/Tasking_1.1r8/ctc/include/stdarg.h :
+/HSSL_TEST.o :	../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h
+../Libraries/Service/CpuGeneric/SysSe/Bsp/Bsp.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Cpu/Std/IfxCpu_Intrinsics.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Cpu/Std/IfxCpu_Intrinsics.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Cpu/Std/IfxCpu.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Cpu/Std/IfxCpu.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Port/Std/IfxPort.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Port/Std/IfxPort.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Src/Std/IfxSrc.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Src/Std/IfxSrc.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Stm/Std/IfxStm.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Stm/Std/IfxStm.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/_Impl/IfxStm_cfg.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/_Impl/IfxStm_cfg.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Cpu/Std/IfxCpu_Intrinsics.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Cpu/Std/IfxCpu_Intrinsics.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Src/Std/IfxSrc.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/iLLD/TC37A/Tricore/Src/Std/IfxSrc.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/Infra/Sfr/TC37A/_Reg/IfxCbs_reg.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/Infra/Sfr/TC37A/_Reg/IfxCbs_reg.h :
+/HSSL_TEST.o :	c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/Infra/Sfr/TC37A/_Reg/IfxCbs_regdef.h
+c:/Users/hejzhu1/Desktop/hssl_driver_code/hssl_test2/Blinky_LED_1_KIT_TC375_LK\ -\ slave/Libraries/Infra/Sfr/TC37A/_Reg/IfxCbs_regdef.h :

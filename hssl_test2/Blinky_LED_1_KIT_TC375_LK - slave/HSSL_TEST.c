@@ -40,8 +40,11 @@
 #include "Libraries\iLLD\TC37A\Tricore\Dma\Dma\IfxDma_Dma.h"
 #include "Libraries\iLLD\TC37A\Tricore\Scu\Std\IfxScuWdt.h"
 // #include "SchM_Hssl.h"
-#include "stdbool.h"
-#include "stdint.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+
+#include "Libraries\Service\CpuGeneric\SysSe\Bsp\Bsp.h"
 
 /*********************************************************************************************************************/
 /*------------------------------------------------------Macros-------------------------------------------------------*/
@@ -65,6 +68,10 @@ IfxScuCcu_Config IfxScuCcu_testClockConfig = {
     IFXSCU_CFG_CLK_DISTRIBUTION,
     &IfxScuCcu_defaultFlashWaitstateConfig,
     &IfxScuCcu_defaultModConfig};
+
+    
+#define LED         &MODULE_P00,5                                           /* LED: Port, Pin definition            */
+#define WAIT_TIME   500                                                     /* Wait time constant in milliseconds   */
 
 /*********************************************************************************************************************/
 /*---------------------------------------------Function Implementations----------------------------------------------*/
@@ -105,13 +112,21 @@ void initHSSL(char ifMode, char sMode, int loopBackMode) // s = slave mode, m = 
         IfxScuCcu_testClockConfig.pllInitialStepConfig.pllsParameters.pllInputClockSelection = IfxScuCcu_PllInputClockSelection_fSysclk;
         IfxScuCcu_init(&IfxScuCcu_testClockConfig);
 
-        if (hsct.hsct->IRQ.B.PLER == 0x1 && hsct.hsct->STATPHY.B.PLOCK == 0x1)
+        if (hsct.hsct->IRQ.B.PLER == 1 && hsct.hsct->STATPHY.B.PLOCK == 1) //it is normal that pll loss lock error appears, as in the code above the PLL will be turned off for configuration
         {
-            hsct.hsct->IRQ.B.PLER = 0x0;
+            hsct.hsct->IRQCLR.B.PLERCLR = 1;
         }
+
+
+
+        hsct.hsct->IFCTRL.B.IFCVS = 0x31; // enable lvds transmitter
+        hsct.hsct->IFCTRL.B.SIFCV = 0x1;
+
     }
     IfxHssl_Hssl_Config hsslConfig;
     IfxHssl_Hssl_initHsslModuleConfig(&hsslConfig, &MODULE_HSSL0);
+
+
 
     IfxHssl_Hssl_initHsslModule(&hssl, &hsslConfig);
 
@@ -123,17 +138,24 @@ void initHSSL(char ifMode, char sMode, int loopBackMode) // s = slave mode, m = 
         IfxHssl_Hssl_initChannel(&hsslChannel[i], &hsslChannelConfig);
     }
 
+
+
     if (ifMode == 's')
     {
-        hsct.hsct->IFCTRL.B.IFCVS = 0x31; // enable lvds transmitter
-        hsct.hsct->IFCTRL.B.SIFCV = 0x1;
-        hsct.hsct->IFCTRL.B.IFCVS = 0x02; // start clock multiplier
-        hsct.hsct->IFCTRL.B.SIFCV = 0x1;
-        hsct.hsct->IFCTRL.B.IFCVS = 0x80; // highspeed reception
-        hsct.hsct->IFCTRL.B.SIFCV = 0x1;
-        hsct.hsct->IFCTRL.B.IFCVS = 0x10; // highspeed transmission
-        hsct.hsct->IFCTRL.B.SIFCV = 0x1;
+        if(sMode == 'h')
+        {
+
+                    hsct.hsct->IFCTRL.B.IFCVS = 0x02; // start clock multiplier
+                    hsct.hsct->IFCTRL.B.SIFCV = 0x1;
+                    hsct.hsct->IFCTRL.B.IFCVS = 0x80; // highspeed reception
+                    hsct.hsct->IFCTRL.B.SIFCV = 0x1;
+                    hsct.hsct->IFCTRL.B.IFCVS = 0x10; // highspeed transmission
+                    hsct.hsct->IFCTRL.B.SIFCV = 0x1;
+
+        }
     }
+
+
 }
 
 void simpleTransferHSSL(int channelNm, uint32 address, uint32 data)
@@ -243,20 +265,58 @@ void speedMode(char speedMode) // h= highSpeed and l = lowSpeed
     }
 }
 
-void setSlave(void)
+
+    void setSlave(void)
 {
-    IfxHssl_setHsctTxLinkSpeed(&(*hsct.hsct), IfxHssl_MasterModeTxSpeed_lowSpeed);
+    if (setHighSpeedMode == 1)
+    {
+        IfxHssl_setHsctTxLinkSpeed(&(*hsct.hsct), IfxHssl_MasterModeTxSpeed_lowSpeed);
 
-    IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_enableReception);
+        IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_enableReception);
 
-    IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedClockStart);
+        IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedClockStart);
 
-    IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedReception);
+        IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedReception);
 
-    IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedTransmission);
+        IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedTransmission);
 
-    IfxHssl_setHsctTxLinkSpeed(&(*hsct.hsct), IfxHssl_MasterModeTxSpeed_highSpeed);
+        IfxHssl_setHsctTxLinkSpeed(&(*hsct.hsct), IfxHssl_MasterModeTxSpeed_highSpeed);
+    }
+    else
+    {
+
+        IfxHssl_setHsctTxLinkSpeed(&(*hsct.hsct), IfxHssl_MasterModeTxSpeed_lowSpeed);
+
+        IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_enableReception);
+
+        // IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedClockStart);
+
+        IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_lowSpeedReception);
+
+        IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_lowSpeedTransmission);
+    }
+    if (setLoopBack == 1)
+    {
+        IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_turnOnPayloadLoopback);
+    }
 }
+
+void initLED(void)
+{
+    /* Initialization of the LED used in this example */
+    IfxPort_setPinModeOutput(LED, IfxPort_OutputMode_pushPull, IfxPort_OutputIdx_general);
+
+    /* Switch OFF the LED (low-level active) */
+    IfxPort_setPinHigh(LED);
+}
+
+/* This function toggles the port pin and wait 500 milliseconds */
+void blinkLED(void)
+{
+    IfxPort_togglePin(LED);                                                     /* Toggle the state of the LED      */
+    waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, WAIT_TIME));    /* Wait 500 milliseconds            */
+}
+
 
 void sendPing(void)
 {
@@ -266,4 +326,31 @@ void sendPing(void)
 void setClockTest(void)
 {
     IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_turnOnClockTestMode);
+}
+
+void testPingAnswer(void)
+{
+if(hsct.hsct->IFSTAT.B.RX_STAT == 1 )
+{
+    blinkLED();
+}
+}
+
+void printPLLFreq(void)
+{
+    float32 pllFreq = IfxScuCcu_getPerPllFrequency1();
+    float32 pll2Freq = IfxScuCcu_getPerPllFrequency2();
+    float32 sysFreq = IfxScuCcu_getPllFrequency();
+    float32 osc0Freq = IfxScuCcu_getOsc0Frequency();
+    float32 oscFreq = IfxScuCcu_getOscFrequency();
+    IfxScuCcu_PllInputClockSelection srcClk = IfxScuCcu_getSourceSelection();
+
+    FILE *f3 =fopen("terminal window 3","rw");
+    fprintf(f3,"Periphal PLL1 is: %f\n",pllFreq);
+    fprintf(f3,"Periphal PLL2 is: %f\n",pll2Freq);
+    fprintf(f3,"system PLL is: %f\n", sysFreq);
+    fprintf(f3,"osc0 freq is: %f\n",osc0Freq);
+    fprintf(f3,"osc freq is: %f\n",oscFreq);
+    fprintf(f3,"srcClk is: %d\n",srcClk);
+    fclose(f3);
 }
