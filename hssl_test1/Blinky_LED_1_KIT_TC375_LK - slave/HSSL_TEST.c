@@ -52,16 +52,40 @@ static IfxHssl_Hsct hsct;
 int setHighSpeedMode = 0;
 int setLoopBack = 0;
 IfxHssl_Hssl_Channel hsslChannel[4];
-IfxScuCcu_Config IfxScuCcu_sampleClockConfig;
 __attribute__((aligned(256))) uint32 txData[80]; // for streaming used
+
+// used globally
+
+// IfxScuCcu_Config IfxScuCcu_sampleClockConfig;
+
+// configuration for the PLL  steps
+static IfxScuCcu_PllStepConfig IfxScuCcu_testPllConfigSteps[] = {
+    IFXSCU_CFG_PLL_STEPS};
+
+static const IfxScuCcu_FlashWaitstateConfig IfxScuCcu_defaultFlashWaitstateConfig = IFXSCU_CFG_FLASH_WAITSTATE;
+// Default configuration for the Clock Configuration
+IfxScuCcu_Config IfxScuCcu_testClockConfig = {
+    // IfxScuCcu_InitialStepConfig: Configuration of first step which is same as internal osc frequency.
+    IFXSCU_CFG_PLL_INITIAL_STEP,
+    // IfxScuCcu_PllThrottleConfig: Configuration of PLL throttling.
+    {
+        sizeof(IfxScuCcu_testPllConfigSteps) / sizeof(IfxScuCcu_PllStepConfig),
+        IfxScuCcu_testPllConfigSteps},
+    IFXSCU_CFG_CLK_DISTRIBUTION,
+    &IfxScuCcu_defaultFlashWaitstateConfig,
+    &IfxScuCcu_defaultModConfig};
 
 /*********************************************************************************************************************/
 /*---------------------------------------------Function Implementations----------------------------------------------*/
 /*********************************************************************************************************************/
 
 /* This function initializes the HSSL master module */
+
+
 void initHSSL(char ifMode, char sMode, int loopBackMode) // s = slave mode, m = master mode
 {
+
+    IfxScuCcu_init(&IfxScuCcu_testClockConfig);
 
     /*module initialisation*/
 
@@ -101,9 +125,14 @@ void initHSSL(char ifMode, char sMode, int loopBackMode) // s = slave mode, m = 
 
     if (ifMode == 's')
     {
-        IfxScuCcu_initConfig(&IfxScuCcu_sampleClockConfig);
+        /*IfxScuCcu_initConfig(&IfxScuCcu_sampleClockConfig);
         IfxScuCcu_sampleClockConfig.pllInitialStepConfig.pllsParameters.pllInputClockSelection = IfxScuCcu_PllInputClockSelection_fSysclk;
-        IfxScuCcu_init(&IfxScuCcu_sampleClockConfig);
+        IfxScuCcu_init(&IfxScuCcu_sampleClockConfig);*/
+
+        IfxScuCcu_initConfig(&IfxScuCcu_testClockConfig);
+        IfxScuCcu_testClockConfig.pllInitialStepConfig.pllsParameters.pllInputClockSelection = IfxScuCcu_PllInputClockSelection_fSysclk;
+        IfxScuCcu_init(&IfxScuCcu_testClockConfig);
+
         if (hsct.hsct->IRQ.B.PLER == 0x1 && hsct.hsct->STATPHY.B.PLOCK == 0x1)
         {
             hsct.hsct->IRQ.B.PLER = 0x0;
@@ -111,7 +140,7 @@ void initHSSL(char ifMode, char sMode, int loopBackMode) // s = slave mode, m = 
     }
 
     // hsct interrupt
-   // initHSCTinterrupt();
+    // initHSCTinterrupt();
 
     // create HSSL module config
     /*
@@ -291,7 +320,7 @@ void setSlave(void)
         IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_enableReception);
 
         IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedClockStart);
-        
+
         IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedReception);
 
         IfxHssl_Hssl_sendControlCommand(&hsct, IfxHssl_ControlCommand_highSpeedTransmission);

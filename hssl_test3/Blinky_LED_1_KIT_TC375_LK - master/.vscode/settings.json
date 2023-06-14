@@ -1,0 +1,21 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "ifxport.h": "c",
+        "ifxhssl.h": "c",
+        "ifxhssl_cfg.h": "c",
+        "ifxhssl_hssl.h": "c",
+        "compare": "c",
+        "limits": "c",
+        "new": "c",
+        "stdbool.h": "c",
+        "ifxscuccu.h": "c",
+        "stdint.h": "c",
+        "ifxdma_dma.h": "c",
+        "ifxcpu_intrinsics.h": "c",
+        "ifxhsct_reg.h": "c",
+        "ifxhssl_reg.h": "c",
+        "ifx_types.h": "c",
+        "ifx_cfg.h": "c"
+    }
+}
