@@ -1,17 +1,3 @@
-# =========================
-# GitHub REPO DESCRIPTION
-# =========================
-Low-level HSSL (High-Speed Serial Link) driver implemented from scratch during internship, enabling reliable high-throughput communication between host software and hardware with error handling, buffering, and timing control.
-
-# =========================
-# GITHUB ABOUT SECTION
-# =========================
-HSSL Driver (Internship) | Low-level embedded driver for high-speed serial communication between host and hardware. Built from scratch with focus on reliability, buffering, and timing constraints.
-
-# =========================
-# FULL README.md
-# =========================
-
 # HSSL Driver Implementation (Internship Project)
 
 ## Overview
